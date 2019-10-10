@@ -6,12 +6,12 @@ SSM_AGENT_SERVICE_NAME=""
 case "$OS_RELEASE" in
   Ubuntu|Debian*)
     apt-get update
-    apt-get install awscli
+    apt-get -y install awscli
     SSM_AGENT_SERVICE_NAME="snap.amazon-ssm-agent.amazon-ssm-agent.service"
     ;;
   "Red Hat"*|CentOS*)
     yum update
-    yum install awscli
+    yum -y install awscli
     SSM_AGENT_SERVICE_NAME="amazon-ssm-agent.service"
     ;;
   "Amazon Linux"*)
@@ -26,7 +26,7 @@ esac
 
 # Discover default network interface
 dni=$(route | grep '^default' | grep -o '[^ ]*$')
-iface_prefix=${dni//[0-9]/''}
+iface_prefix=$(echo "$dni" | sed 's/[0-9]$//')
 
 # Determine the region
 # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html
