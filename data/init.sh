@@ -26,8 +26,7 @@ esac
 
 # Discover default network interface
 dni=$(route | grep '^default' | grep -o '[^ ]*$')
-iface_prefix=$(${dni//[0-9]$//})
-
+iface_prefix=${dni//[0-9]/''}
 
 # Determine the region
 # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html
