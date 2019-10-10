@@ -41,11 +41,11 @@ aws ec2 attach-network-interface \
     --device-index 1 \
     --network-interface-id "${eni_id}"
 
-cd /proc/sys/net/ipv4/conf || exit
-new_iface=$(ls -d1 "$iface_prefix"* | grep -v "$dni")
-
 # Wait for network initialization
 sleep 10
+
+cd /proc/sys/net/ipv4/conf || exit
+new_iface=$(ls -d1 "$iface_prefix"* | grep -v "$dni")
 
 # Enable IP forwarding and NAT
 # TODO: figure out which where the new interface attached. it's not always eth1.
